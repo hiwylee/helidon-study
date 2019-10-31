@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: helidon-quickstart-se
-        image: icn.ocir.io/cnposhq5ua53/helidon-quickstart-se:v1
+        image: helidon-quickstart-se
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
