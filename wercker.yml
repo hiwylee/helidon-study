@@ -12,8 +12,8 @@ build:
         packages: maven
     - script:
         name: maven package
-        #cwd: helidon-quickstart-se
-        cwd: .
+        cwd: helidon-quickstart-se
+        #cwd: .
         code: mvn clean package
         
 #Push the docker image with our built and tested application to the Oracle Container Registry
