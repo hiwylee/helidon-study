@@ -13,11 +13,13 @@ build:
     - script:
         name: maven package
         cwd: helidon-quickstart-se
-        #cwd: .
         code: mvn clean package
-        
+    - script:
+        name: maven package
+        cwd: helidon-quickstart-mp
+        code: mvn clean package
 #Push the docker image with our built and tested application to the Oracle Container Registry
-push-release:
+push-release-se:
   steps:
     - internal/docker-push:
         username: $DOCKER_USERNAME
@@ -28,6 +30,17 @@ push-release:
         working-dir: /pipeline/source/helidon-quickstart-se
         ports: 8080
         cmd: java -jar target/helidon-quickstart-se.jar
+push-release-mp:
+  steps:
+    - internal/docker-push:
+        username: $DOCKER_USERNAME
+        password: $OCI_AUTH_TOKEN
+        repository: $DOCKER_REGISTRY/$DOCKER_REPO
+        registry: https://$DOCKER_REGISTRY/v2
+        tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
+        working-dir: /pipeline/source/helidon-quickstart-mp
+        ports: 8090
+        cmd: java -jar target/helidon-quickstart-mp.jar
         
 
 #Deploy our container from the Oracle Container Registry to the Oracle Container Engine (Kubernetes)
@@ -64,3 +77,14 @@ deploy-to-cluster:
         token: $KUBERNETES_AUTH_TOKEN
         insecure-skip-tls-verify: true
         command: apply -f helidon-quickstart-se/app.yaml
+
+    - script:
+        name: "Visualise  Kubernetes config"
+        code: cat helidon-quickstart-mp/app.yaml
+
+    - kubectl:
+        name: deploy  helidon-quickstart-se to kubernetes
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_AUTH_TOKEN
+        insecure-skip-tls-verify: true
+        command: apply -f helidon-quickstart-mp/app.yaml
