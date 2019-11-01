@@ -2,7 +2,7 @@
 box:
   id: openjdk:8
   ports:
-    - 9090
+    - 8080
 
 
 #Build our application using Maven, just as we always have
@@ -14,7 +14,7 @@ build:
         name: maven package
         #cwd: helidon-quickstart-se
         cwd: .
-        code: mvn clean assembly:assembly
+        code: mvn clean package
         
 #Push the docker image with our built and tested application to the Oracle Container Registry
 push-release:
