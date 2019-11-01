@@ -83,7 +83,7 @@ deploy-to-cluster:
         code: cat helidon-quickstart-mp/app.yaml
 
     - kubectl:
-        name: deploy  helidon-quickstart-se to kubernetes
+        name: deploy  helidon-quickstart-mp to kubernetes
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_AUTH_TOKEN
         insecure-skip-tls-verify: true
