@@ -12,8 +12,7 @@ build:
         packages: maven
     - script:
         name: maven package
-        #cwd: helidon-quickstart-se
-        cwd: .
+        cwd: helidon-quickstart-se
         code: mvn clean assembly:assembly
         
 #Push the docker image with our built and tested application to the Oracle Container Registry
@@ -63,4 +62,4 @@ deploy-to-cluster:
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_AUTH_TOKEN
         insecure-skip-tls-verify: true
-        command: apply -f app.yml
+        command: apply -f helidon-quickstart-se/app.yml
