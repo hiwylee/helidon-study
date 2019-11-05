@@ -28,6 +28,8 @@ spec:
   - port: 31000
     targetPort: 8080
     name: http
+  type: LoadBalancer
+
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1
@@ -35,16 +37,22 @@ metadata:
   name: helidon-quickstart-mp
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: helidon-quickstart-mp
   template:
     metadata:
       labels:
         app: helidon-quickstart-mp
-        version: v1
+        #version: v1
     spec:
       containers:
       - name: helidon-quickstart-mp
-        image: helidon-quickstart-mp
-        imagePullPolicy: IfNotPresent
+        image: icn.ocir.io/cnposhq5ua53/helidon-quickstart-mp:latest
+        #imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+        - name: ocirsecret
 ---
