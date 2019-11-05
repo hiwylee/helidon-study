@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
       - name: helidon-quickstart-mp
-        image: icn.ocir.io/cnposhq5ua53/helidon-quickstart-mp:latest
+        image: icn.ocir.io/cnposhq5ua53/helidon-quickstart-mp:v1
         #imagePullPolicy: IfNotPresent
         imagePullPolicy: Always
         ports:
